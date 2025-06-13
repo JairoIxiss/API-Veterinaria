@@ -28,10 +28,10 @@ public class DuenoController {
         return dueServ.getDuenos();
     }
     
-    @PutMapping("/duenos/editar")
-    public Dueno editarDueno(@RequestBody Dueno due){
-        dueServ.editDueno(due);
-        return dueServ.findDueno(due.getId_dueno());
+    @PutMapping("/duenos/editar/{id}")
+    public Dueno editarDueno(@PathVariable Long id, @RequestBody Dueno due){
+        dueServ.editDueno(id, due);
+        return dueServ.findDueno(id);
     }
     
     @DeleteMapping("/duenos/borrar/{id}")

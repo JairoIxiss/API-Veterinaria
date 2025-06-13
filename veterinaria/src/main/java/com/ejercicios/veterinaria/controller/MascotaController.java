@@ -1,6 +1,7 @@
 package com.ejercicios.veterinaria.controller;
 
 import com.ejercicios.veterinaria.dto.DuenoMascotaDTO;
+import com.ejercicios.veterinaria.dto.MascotaDTO;
 import com.ejercicios.veterinaria.model.Mascota;
 import com.ejercicios.veterinaria.service.MascotaService;
 import java.util.List;
@@ -19,7 +20,7 @@ public class MascotaController {
     private MascotaService mascServ;
     
     @PostMapping("/mascotas/crear")
-    public String crearMascota(@RequestBody Mascota masco){
+    public String crearMascota(@RequestBody MascotaDTO masco){
         mascServ.saveMascota(masco);
         return "La mascota se ha creado con exito";
     }
@@ -29,10 +30,10 @@ public class MascotaController {
         return mascServ.getMascotas();
     }
     
-    @PutMapping("/mascotas/editar")
-    public Mascota editarMascota(@RequestBody Mascota masco){
-        mascServ.saveMascota(masco);
-        return mascServ.findMascota(masco.getId_mascota());
+    @PutMapping("/mascotas/editar/{id}")
+    public Mascota editarMascota(@PathVariable Long id, @RequestBody MascotaDTO masco){
+        mascServ.editMascota(id, masco);
+        return mascServ.findMascota(id);
     }
     
     @DeleteMapping("/mascotas/eliminar/{id}")

@@ -32,7 +32,14 @@ public class DuenoService implements IDuenoService {
     }
 
     @Override
-    public void editDueno(Dueno due) {
-        this.saveDueno(due);
+    public void editDueno(Long id, Dueno nuevoDueno) {
+        Dueno duenoEditar = this.findDueno(id);
+
+        duenoEditar.setDni(nuevoDueno.getDni());
+        duenoEditar.setNombreDueno(nuevoDueno.getNombreDueno());
+        duenoEditar.setApellido(nuevoDueno.getApellido());
+        duenoEditar.setCelular(nuevoDueno.getCelular());
+
+        this.saveDueno(duenoEditar);
     }
 }

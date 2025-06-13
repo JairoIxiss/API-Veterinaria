@@ -1,11 +1,7 @@
 package com.ejercicios.veterinaria.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,8 +15,9 @@ public class Mascota {
     private String especie;
     private String raza;
     private String color;
-    @OneToOne
-    @JoinColumn(name= "id_mascota",referencedColumnName = "id_dueno")
+    @ManyToOne
+    @JoinColumn(name = "id_dueno")
+    @JsonBackReference
     private Dueno dueno;
     
     public Mascota() {

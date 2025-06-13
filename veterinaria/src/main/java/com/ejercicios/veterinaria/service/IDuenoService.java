@@ -13,6 +13,6 @@ public interface IDuenoService {
     
     public void deleteDueno(Long id);
     
-    public void editDueno(Dueno due);
+    public void editDueno(Long id, Dueno nuevoDueno);
     
 }

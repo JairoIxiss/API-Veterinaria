@@ -1,7 +1,10 @@
 package com.ejercicios.veterinaria.service;
 
 import com.ejercicios.veterinaria.dto.DuenoMascotaDTO;
+import com.ejercicios.veterinaria.dto.MascotaDTO;
+import com.ejercicios.veterinaria.model.Dueno;
 import com.ejercicios.veterinaria.model.Mascota;
+import com.ejercicios.veterinaria.repository.IDuenoRepository;
 import com.ejercicios.veterinaria.repository.IMascotaRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +16,21 @@ public class MascotaService implements IMascotaService{
     @Autowired
     private IMascotaRepository mascoRepo;
 
+    @Autowired
+    private IDuenoRepository duenoRepo;
+
     @Override
-    public void saveMascota(Mascota masco) {
-        mascoRepo.save(masco);
+    public void saveMascota(MascotaDTO mascotaDTO) {
+        Dueno dueno =  duenoRepo.findById(mascotaDTO.getIdDueno()).orElse(null);
+        Mascota mascota = new Mascota();
+
+        mascota.setNombreMascota(mascotaDTO.getNombreMascota());
+        mascota.setEspecie(mascotaDTO.getEspecie());
+        mascota.setRaza(mascotaDTO.getRaza());
+        mascota.setColor(mascotaDTO.getColor());
+        mascota.setDueno(dueno);
+
+        mascoRepo.save(mascota);
     }
 
     @Override
@@ -34,8 +49,17 @@ public class MascotaService implements IMascotaService{
     }
 
     @Override
-    public void editMascota(Mascota masco) {
-        this.saveMascota(masco);
+    public void editMascota(Long id, MascotaDTO nuevaMascota) {
+        Mascota mascotaEditar = this.findMascota(id);
+        Dueno dueno = duenoRepo.findById(nuevaMascota.getIdDueno()).orElse(null);
+
+        mascotaEditar.setNombreMascota(nuevaMascota.getNombreMascota());
+        mascotaEditar.setEspecie(nuevaMascota.getEspecie());
+        mascotaEditar.setRaza(nuevaMascota.getRaza());
+        mascotaEditar.setColor(nuevaMascota.getColor());
+        mascotaEditar.setDueno(dueno);
+
+        mascoRepo.save(mascotaEditar);
     }
 
     @Override
